@@ -1,0 +1,30 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(pytest*)",
+      "Bash(ruff*)",
+      "Bash(mypy*)",
+      "Bash(alembic upgrade*)",
+      "Bash(alembic revision*)",
+      "Bash(npm run*)",
+      "Bash(git status*)",
+      "Bash(git diff*)",
+      "Bash(git log*)",
+      "Bash(python -m eval.report*)"
+    ],
+    "ask": [
+      "Bash(git push*)",
+      "Bash(git commit*)",
+      "Bash(python -m ingestion*)",
+      "Bash(python -m extraction*)"
+    ],
+    "deny": [
+      "Read(./.env)",
+      "Read(./.env.local)",
+      "Bash(alembic downgrade*)",
+      "Write(./backend/eval/gold_labels/**)",
+      "Write(./docs/SCHEMA.md)",
+      "Write(./docs/EXTRACTION_CONTRACT.md)"
+    ]
+  }
+}
