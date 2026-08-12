@@ -1,0 +1,12 @@
+{
+  "name": "cirp-index",
+  "private": true,
+  "scripts": {
+    "dev": "concurrently -n backend,frontend -c blue,green \"npm:dev:backend\" \"npm:dev:frontend\"",
+    "dev:backend": "cd backend && bash -c 'source .venv/bin/activate && uvicorn app.main:app --reload --port 8000'",
+    "dev:frontend": "npm run dev --prefix frontend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
