@@ -33,6 +33,7 @@ from app.database import SessionLocal
 from models.enums import OutcomeEnum, ProcessingStatusEnum
 from models.ingestion import IngestionRun
 from models.order import Order
+from parsing.bench import extract_bench
 from parsing.case_number import extract_case_number
 
 logger = logging.getLogger(__name__)
@@ -78,6 +79,7 @@ class ParsedRow:
     order_date: date | None
     subject_raw: str
     case_number: str | None
+    bench: str | None
     pdf_url: str
     file_size_bytes: int | None
     remarks_raw: str
@@ -188,11 +190,13 @@ def parse_page(html: str) -> list[ParsedRow]:
         pdf_url = urljoin(BASE_URL, str(link["href"]).strip())
         remarks_raw = tds[3].get_text(strip=True)
 
+        case_number = extract_case_number(subject_raw)
         rows.append(
             ParsedRow(
                 order_date=order_date,
                 subject_raw=subject_raw,
-                case_number=extract_case_number(subject_raw),
+                case_number=case_number,
+                bench=extract_bench(case_number),
                 pdf_url=pdf_url,
                 file_size_bytes=file_size_bytes,
                 remarks_raw=remarks_raw,
@@ -216,6 +220,7 @@ def upsert_row(db: Session, row: ParsedRow, source_listing_page: int) -> bool:
             order_date=row.order_date,
             subject_raw=row.subject_raw,
             case_number=row.case_number,
+            bench=row.bench,
             pdf_url=row.pdf_url,
             file_size_bytes=row.file_size_bytes,
             remarks_raw=row.remarks_raw,

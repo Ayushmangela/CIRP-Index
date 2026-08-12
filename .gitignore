@@ -44,6 +44,13 @@ frontend/next-env.d.ts
 .npm
 *.log
 
+# Eval staging files - regenerable from the DB. eval/latest.json is NOT
+# ignored: docs/EVALUATION.md has the README quote real numbers from it, so
+# it's meant to be a committed, versioned snapshot.
+backend/eval/worksheet.csv
+backend/eval/worksheet_pages/
+backend/eval/latest_extraction_run.json
+
 # IDE & OS
 .DS_Store
 .vscode/

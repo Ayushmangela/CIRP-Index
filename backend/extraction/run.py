@@ -8,10 +8,12 @@ construct one by hand. Same verification and persistence path either way.
 """
 
 import argparse
+import json
 import logging
 from collections import Counter
 from dataclasses import dataclass, field
 from datetime import datetime, timezone
+from pathlib import Path
 
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -31,6 +33,7 @@ from parsing.indian_numbers import parse_amount
 logger = logging.getLogger(__name__)
 
 REJECTION_RATE_WARNING_THRESHOLD = 0.25
+DEFAULT_RUN_SUMMARY_PATH = Path("eval/latest_extraction_run.json")
 
 
 @dataclass
@@ -103,7 +106,7 @@ def _merge(total: ExtractionSummary, part: ExtractionSummary) -> None:
     total.not_found.extend(part.not_found)
 
 
-def run(limit: int, db: Session) -> None:
+def run(limit: int, db: Session, summary_path: Path = DEFAULT_RUN_SUMMARY_PATH) -> None:
     started_at = datetime.now(timezone.utc)
     ingestion_run = IngestionRun(started_at=started_at)
     db.add(ingestion_run)
@@ -167,6 +170,22 @@ def run(limit: int, db: Session) -> None:
         f"rejected={rejected_count} not_found={len(totals.not_found)}"
     )
     db.commit()
+
+    summary_path.parent.mkdir(parents=True, exist_ok=True)
+    summary_path.write_text(
+        json.dumps(
+            {
+                "generated_at": datetime.now(timezone.utc).isoformat(),
+                "orders_processed": len(orders),
+                "attempted": totals.attempted,
+                "verified": totals.verified,
+                "rejected": rejected_count,
+                "not_found": len(totals.not_found),
+                "rejection_reasons": dict(rejection_reasons),
+            },
+            indent=2,
+        )
+    )
 
     logger.info("orders processed: %d", len(orders))
     logger.info("fields attempted: %d", totals.attempted)

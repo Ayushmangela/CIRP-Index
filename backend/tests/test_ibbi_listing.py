@@ -39,6 +39,22 @@ class TestParsePage:
         assert first.file_size_bytes is not None
         assert first.file_size_bytes > 0
 
+    def test_bench_is_populated_when_case_number_parses(self) -> None:
+        # Real misses in this fixture set: two case numbers have no bench
+        # segment at all, one uses an alphanumeric code ("C8"), one has an
+        # inserted "/C of " qualifier breaking year-adjacency, and one
+        # writes the bench in mixed case ("Chd/Pb"). All genuine source
+        # irregularities, not parser bugs - see parsing/bench.py.
+        all_rows: list[ParsedRow] = []
+        for fixture in ("page_0.html", "page_100.html", "page_800.html"):
+            all_rows.extend(parse_page(_load(fixture)))
+
+        with_case_number = [r for r in all_rows if r.case_number is not None]
+        with_bench = [r for r in with_case_number if r.bench is not None]
+        rate = len(with_bench) / len(with_case_number)
+        assert rate > 0.85, f"bench parse rate too low: {rate:.1%}"
+        assert len({r.bench for r in with_bench}) >= 4
+
     def test_case_number_parse_rate_above_90_percent(self) -> None:
         all_rows: list[ParsedRow] = []
         for fixture in ("page_0.html", "page_100.html", "page_800.html"):
