@@ -11,6 +11,12 @@ export default {
         foreground: "#1A1A1A",
         ink: "#0A192F",
         hairline: "#E5E5E0",
+        cream: {
+          DEFAULT: "#FAF9F6",
+          50: "#FFFEFC",
+          100: "#F3F0E8",
+          200: "#EAE5D8",
+        },
         outcome: {
           admitted: "#3B5284",
           ongoing: "#D97706",
@@ -22,8 +28,9 @@ export default {
         }
       },
       fontFamily: {
-        mono: ['JetBrains Mono', 'monospace'],
-        sans: ['Inter', 'sans-serif']
+        mono: ['var(--font-mono)', '"JetBrains Mono"', 'monospace'],
+        sans: ['var(--font-sans)', 'Inter', 'sans-serif'],
+        serif: ['var(--font-serif)', '"Source Serif 4"', 'Georgia', 'serif']
       }
     },
   },

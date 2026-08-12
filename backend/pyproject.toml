@@ -20,6 +20,7 @@ dependencies = [
     "pypdf>=4.1.0",
     "pdfplumber>=0.11.0",
     "tenacity>=8.2.3",
+    "beautifulsoup4>=4.12.3",
 ]
 
 [project.optional-dependencies]
@@ -31,7 +32,7 @@ dev = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["app*", "models*"]
+include = ["app*", "models*", "ingestion*", "parsing*"]
 
 [tool.ruff]
 line-length = 88

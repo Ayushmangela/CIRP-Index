@@ -4,7 +4,12 @@
 
 @layer base {
   body {
-    background-color: #FAF9F6;
-    color: #1A1A1A;
+    background-color: theme('colors.cream.DEFAULT');
+    color: #1a1a1a;
+  }
+
+  .font-mono {
+    font-feature-settings: 'tnum' 1, 'zero' 1;
+    font-variant-numeric: tabular-nums;
   }
 }
