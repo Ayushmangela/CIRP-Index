@@ -13,7 +13,6 @@ import models  # noqa: F401
 from app.config import settings
 from app.database import Base
 
-
 config = context.config
 
 if config.config_file_name:

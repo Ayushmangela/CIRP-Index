@@ -1,0 +1,105 @@
+{
+  "generated_at": "2026-08-12T12:46:06.670171+00:00",
+  "fields": [
+    {
+      "field_name": "corporate_debtor",
+      "gold_present": 25,
+      "claimed": 1,
+      "correct_exact": 0,
+      "correct_within_tolerance": null,
+      "precision": 0.0,
+      "recall": 0.04,
+      "exact_match_rate": 0.0,
+      "within_tolerance_rate": null
+    },
+    {
+      "field_name": "applicant_creditor",
+      "gold_present": 21,
+      "claimed": 0,
+      "correct_exact": 0,
+      "correct_within_tolerance": null,
+      "precision": null,
+      "recall": 0.0,
+      "exact_match_rate": null,
+      "within_tolerance_rate": null
+    },
+    {
+      "field_name": "creditor_type",
+      "gold_present": 14,
+      "claimed": 0,
+      "correct_exact": 0,
+      "correct_within_tolerance": null,
+      "precision": null,
+      "recall": 0.0,
+      "exact_match_rate": null,
+      "within_tolerance_rate": null
+    },
+    {
+      "field_name": "claim_amount",
+      "gold_present": 0,
+      "claimed": 0,
+      "correct_exact": 0,
+      "correct_within_tolerance": 0,
+      "precision": null,
+      "recall": null,
+      "exact_match_rate": null,
+      "within_tolerance_rate": null
+    },
+    {
+      "field_name": "section_invoked",
+      "gold_present": 25,
+      "claimed": 1,
+      "correct_exact": 0,
+      "correct_within_tolerance": null,
+      "precision": 0.0,
+      "recall": 0.04,
+      "exact_match_rate": 0.0,
+      "within_tolerance_rate": null
+    },
+    {
+      "field_name": "resolution_professional",
+      "gold_present": 5,
+      "claimed": 1,
+      "correct_exact": 0,
+      "correct_within_tolerance": null,
+      "precision": 0.0,
+      "recall": 0.2,
+      "exact_match_rate": 0.0,
+      "within_tolerance_rate": null
+    },
+    {
+      "field_name": "adjudicating_authority_bench",
+      "gold_present": 25,
+      "claimed": 0,
+      "correct_exact": 0,
+      "correct_within_tolerance": null,
+      "precision": null,
+      "recall": 0.0,
+      "exact_match_rate": null,
+      "within_tolerance_rate": null
+    },
+    {
+      "field_name": "admission_date",
+      "gold_present": 13,
+      "claimed": 0,
+      "correct_exact": 0,
+      "correct_within_tolerance": null,
+      "precision": null,
+      "recall": 0.0,
+      "exact_match_rate": null,
+      "within_tolerance_rate": null
+    },
+    {
+      "field_name": "order_type",
+      "gold_present": 19,
+      "claimed": 1,
+      "correct_exact": 0,
+      "correct_within_tolerance": null,
+      "precision": 0.0,
+      "recall": 0.05263157894736842,
+      "exact_match_rate": 0.0,
+      "within_tolerance_rate": null
+    }
+  ],
+  "rejection_summary": null
+}
