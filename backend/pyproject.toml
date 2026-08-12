@@ -33,7 +33,7 @@ dev = [
 ]
 
 [tool.setuptools.packages.find]
-include = ["app*", "models*", "ingestion*", "parsing*"]
+include = ["app*", "models*", "ingestion*", "parsing*", "extraction*", "eval*", "linking*"]
 
 [tool.ruff]
 line-length = 88
@@ -41,7 +41,10 @@ target-version = "py311"
 
 [tool.ruff.lint]
 select = ["E", "F", "B", "I"]
-ignore = []
+# B008: flags `Depends(...)`/`Query(...)` in argument defaults, which is
+# FastAPI's actual required dependency-injection pattern, not a bug -
+# recurs on every route handler.
+ignore = ["B008"]
 
 [tool.mypy]
 python_version = "3.11"

@@ -6,7 +6,7 @@ from sqlalchemy import Engine, create_engine
 from sqlalchemy.orm import Session, sessionmaker
 
 from app.config import settings
-from app.database import Base
+from app.database import Base, get_db
 from app.main import app
 
 engine = create_engine(settings.TEST_DATABASE_URL, pool_pre_ping=True)
@@ -37,3 +37,17 @@ def db_session(db_engine: Engine) -> Generator[Session, None, None]:
 def client() -> Generator[TestClient, None, None]:
     with TestClient(app) as c:
         yield c
+
+
+@pytest.fixture
+def api_client(db_session: Session) -> Generator[TestClient, None, None]:
+    """TestClient wired to the same rolled-back db_session, so data
+    inserted in a test is visible to the API requests it makes."""
+
+    def override_get_db() -> Generator[Session, None, None]:
+        yield db_session
+
+    app.dependency_overrides[get_db] = override_get_db
+    with TestClient(app) as c:
+        yield c
+    app.dependency_overrides.clear()

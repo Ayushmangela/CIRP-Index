@@ -1,4 +1,8 @@
-from parsing.case_number import extract_case_number
+from parsing.case_number import (
+    extract_case_number,
+    normalise_case_number,
+    split_parent_case,
+)
 
 
 class TestDocumentedFormats:
@@ -51,6 +55,18 @@ class TestBracketedLiveSubjects:
                 "[IA No. 51/ND/2024 in CP (IB) No. 300/ND/2021]"
             )
             == "IA No. 51/ND/2024 in CP (IB) No. 300/ND/2021"
+        )
+
+    def test_nested_bracket_captures_full_outer_group(self) -> None:
+        # Found via linking/run.py against real data: a fully-nested
+        # bracket used to break extraction entirely (order 46 in the dev
+        # DB came back with no case_number at all before this fix).
+        assert (
+            extract_case_number(
+                "In the matter of KRISHNA ELECTRICAL INDUSTRIES LIMITED "
+                "[TP(lBC)/1(MP)2024 [CP 11 of 2015]]"
+            )
+            == "TP(lBC)/1(MP)2024 [CP 11 of 2015]"
         )
 
     def test_bracket_with_trailing_space(self) -> None:
@@ -150,3 +166,66 @@ class TestEdgeCases:
 
     def test_bracket_without_digits_falls_through_to_none(self) -> None:
         assert extract_case_number("In the matter of X [not a case number]") is None
+
+
+class TestNormaliseCaseNumber:
+    def test_dots_and_slashes_removed(self) -> None:
+        assert normalise_case_number("CP (IB)/93/MP/2023") == "CPIB93MP2023"
+
+    def test_different_punctuation_same_case_matches(self) -> None:
+        a = normalise_case_number("C.P. (IB)/93/MP/2023")
+        b = normalise_case_number("CP IB 93 MP 2023")
+        assert a == b == "CPIB93MP2023"
+
+    def test_no_word_stripped_so_presence_does_not_matter(self) -> None:
+        with_no = normalise_case_number("CP (IB) No. 300/ND/2021")
+        without_no = normalise_case_number("CP (IB) 300/ND/2021")
+        assert with_no == without_no == "CPIB300ND2021"
+
+    def test_lowercase_and_uppercase_match(self) -> None:
+        assert normalise_case_number("cp(ib)/93/mp/2023") == normalise_case_number(
+            "CP(IB)/93/MP/2023"
+        )
+
+    def test_empty_string_returns_empty(self) -> None:
+        assert normalise_case_number("") == ""
+
+    def test_kob_paren_dash_variant(self) -> None:
+        assert normalise_case_number("CP(IBC)-24(KOB)-2021") == "CPIBC24KOB2021"
+
+
+class TestSplitParentCase:
+    def test_ia_in_cp(self) -> None:
+        result = split_parent_case("IA No. 51/ND/2024 in CP (IB) No. 300/ND/2021")
+        assert result == ("IA No. 51/ND/2024", "CP (IB) No. 300/ND/2021")
+
+    def test_case_insensitive_in(self) -> None:
+        result = split_parent_case(
+            "IA(IBC)/967 & 969(CH)2026 In CP (IB) No.146/Chd/Hry/2024"
+        )
+        assert result == (
+            "IA(IBC)/967 & 969(CH)2026",
+            "CP (IB) No.146/Chd/Hry/2024",
+        )
+
+    def test_multi_ia_ampersand(self) -> None:
+        result = split_parent_case("IA-05 & 06/2023 in (IB) 2060 & 2061 (PB)/2019")
+        assert result == ("IA-05 & 06/2023", "(IB) 2060 & 2061 (PB)/2019")
+
+    def test_no_in_clause_returns_none(self) -> None:
+        assert split_parent_case("CP(IB) No. 155/9/HDB/2020") is None
+
+    def test_none_input_returns_none(self) -> None:
+        assert split_parent_case(None) is None  # type: ignore[arg-type]
+
+    def test_empty_string_returns_none(self) -> None:
+        assert split_parent_case("") is None
+
+    def test_normalised_parent_matches_direct_reference(self) -> None:
+        # The whole point: an IA's parent reference and a direct mention of
+        # that same CP elsewhere should normalise identically.
+        result = split_parent_case("IA No. 51/ND/2024 in CP (IB) No. 300/ND/2021")
+        assert result is not None
+        child, parent = result
+        direct_reference = "CP (IB) 300/ND/2021"
+        assert normalise_case_number(parent) == normalise_case_number(direct_reference)

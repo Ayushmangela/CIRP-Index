@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import type { ReactNode } from 'react';
+import Link from 'next/link';
 import { Inter, JetBrains_Mono, Source_Serif_4 } from 'next/font/google';
 import { Providers } from './providers';
 import './globals.css';
@@ -39,25 +40,26 @@ export default function RootLayout({ children }: { children: ReactNode }) {
 
             <header className="px-6 pt-6 pb-5 border-b border-hairline flex justify-between items-end">
               <div>
-                <h1 className="text-2xl font-serif font-semibold tracking-tight text-ink">
-                  CIRP Index
-                </h1>
+                <Link href="/">
+                  <h1 className="text-2xl font-serif font-semibold tracking-tight text-ink">
+                    CIRP Index
+                  </h1>
+                </Link>
                 <p className="mt-1 text-[11px] font-mono uppercase tracking-[0.14em] text-[#6B6B66]">
                   IBBI Order Intelligence &amp; Evidence Resolution
                 </p>
               </div>
-              <div className="flex items-center gap-2 text-[11px] font-mono uppercase tracking-wider text-[#6B6B66] border border-hairline bg-cream-50 px-3 py-1.5">
-                <span
-                  className="inline-block w-1.5 h-1.5 bg-[#15803D]"
-                  aria-hidden
-                />
-                System Status: Operational
-              </div>
+              <nav className="flex items-center gap-4 text-[11px] font-mono uppercase tracking-wider text-[#6B6B66]">
+                <Link href="/" className="hover:text-ink">
+                  Search
+                </Link>
+                <Link href="/analytics" className="hover:text-ink">
+                  Bench Analytics
+                </Link>
+              </nav>
             </header>
 
-            <main className="flex-1 flex items-center px-6 py-16">
-              {children}
-            </main>
+            <main className="flex-1 px-6 py-8">{children}</main>
 
             <footer className="border-t border-hairline bg-cream-100 px-6 py-5 text-center">
               <p className="text-xs italic text-[#6B6B66] max-w-2xl mx-auto leading-relaxed">

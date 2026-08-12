@@ -18,13 +18,13 @@ export default {
           200: "#EAE5D8",
         },
         outcome: {
-          admitted: "#3B5284",
-          ongoing: "#D97706",
-          approved: "#15803D",
-          liquidation: "#B91C1C",
-          dissolved: "#737373",
-          withdrawn: "#8B5CF6",
-          unclassified: "#9CA3AF"
+          admitted: "#4A6FA5",
+          cirp_ongoing: "#B8860B",
+          resolution_approved: "#2D5F3F",
+          liquidation: "#A0432B",
+          dissolved: "#7A7873",
+          withdrawn: "#6B5B7B",
+          unclassified: "#9A9892"
         }
       },
       fontFamily: {
