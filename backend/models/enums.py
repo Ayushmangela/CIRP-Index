@@ -16,6 +16,7 @@ class ProcessingStatusEnum(str, enum.Enum):
     downloaded = "downloaded"
     text_extracted = "text_extracted"
     scanned_skipped = "scanned_skipped"
+    ocr_extracted = "ocr_extracted"
     extracted = "extracted"
     failed = "failed"
 

@@ -115,7 +115,14 @@ def run(limit: int, db: Session, summary_path: Path = DEFAULT_RUN_SUMMARY_PATH) 
     orders = list(
         db.execute(
             select(Order)
-            .where(Order.processing_status == ProcessingStatusEnum.text_extracted)
+            .where(
+                Order.processing_status.in_(
+                    (
+                        ProcessingStatusEnum.text_extracted,
+                        ProcessingStatusEnum.ocr_extracted,
+                    )
+                )
+            )
             .order_by(Order.id)
             .limit(limit)
         ).scalars()

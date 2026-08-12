@@ -1,6 +1,6 @@
 # 0002 — Skip scanned orders rather than OCR them
 
-**Status:** accepted
+**Status:** superseded by 0004
 **Date:** 2026-08-12
 
 ## Context

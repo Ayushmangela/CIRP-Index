@@ -30,6 +30,14 @@ export function OrderTimeline({ orders }: { orders: OrderSummary[] }) {
               >
                 Source PDF
               </a>
+              {order.processing_status === 'ocr_extracted' && (
+                <span
+                  className="mt-1 text-[9px] font-mono uppercase tracking-wider text-[#B8860B]"
+                  title="This order was a scanned image with no text layer — its text comes from OCR, not the original document. Verify against the source PDF before relying on any figure."
+                >
+                  OCR text
+                </span>
+              )}
             </div>
             {i < sorted.length - 1 && (
               <div className="w-10 h-px bg-hairline mt-1 shrink-0" aria-hidden />

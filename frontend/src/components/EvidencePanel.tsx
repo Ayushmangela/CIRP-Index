@@ -10,9 +10,11 @@ export function evidenceId(index: number): string {
 export function EvidencePanel({
   evidence,
   activeIndex,
+  ocrOrderIds,
 }: {
   evidence: EvidenceItem[];
   activeIndex: number | null;
+  ocrOrderIds?: Set<number>;
 }) {
   if (evidence.length === 0) {
     return (
@@ -49,6 +51,14 @@ export function EvidencePanel({
             </p>
             <p className="mt-1 text-[10px] font-mono text-[#9A9892] tabular-nums">
               Page {e.page_number} · Order {formatDate(e.order_date)}
+              {ocrOrderIds?.has(e.order_id) && (
+                <span
+                  className="ml-1.5 text-[#B8860B] uppercase"
+                  title="This quote comes from OCR text (the source order was a scanned image, not digital text) — verify against the source PDF before relying on it."
+                >
+                  · OCR
+                </span>
+              )}
             </p>
           </li>
         ))}

@@ -41,6 +41,7 @@ cd frontend && npm run dev                        # UI on :3000
 
 python -m ingestion.ibbi_listing --start-page 0 --end-page 5
 python -m ingestion.pdf_pipeline --limit 50
+python -m ingestion.ocr_pipeline --limit 50   # scanned_skipped -> ocr_extracted, see docs/decisions/0004
 python -m extraction.run --limit 20
 python -m eval.report
 ```

@@ -40,6 +40,9 @@ export default function CaseDetailPage({
   }
 
   const c = caseQuery.data;
+  const ocrOrderIds = new Set(
+    c.orders.filter((o) => o.processing_status === 'ocr_extracted').map((o) => o.id),
+  );
 
   return (
     <div className="max-w-6xl mx-auto">
@@ -100,7 +103,11 @@ export default function CaseDetailPage({
         </div>
 
         <div className="w-80 shrink-0">
-          <EvidencePanel evidence={c.evidence} activeIndex={activeEvidenceIndex} />
+          <EvidencePanel
+            evidence={c.evidence}
+            activeIndex={activeEvidenceIndex}
+            ocrOrderIds={ocrOrderIds}
+          />
         </div>
       </div>
     </div>

@@ -21,6 +21,8 @@ dependencies = [
     "pdfplumber>=0.11.0",
     "tenacity>=8.2.3",
     "beautifulsoup4>=4.12.3",
+    "pymupdf>=1.24.0",
+    "pytesseract>=0.3.10",
 ]
 
 [project.optional-dependencies]
@@ -50,6 +52,13 @@ ignore = ["B008"]
 python_version = "3.11"
 strict = true
 ignore_missing_imports = true
+
+# pymupdf ships incomplete/untyped stubs upstream (Document's own methods
+# are untyped) - not a project code issue, so the untyped-call check is
+# disabled for just the module that calls into it, rather than repo-wide.
+[[tool.mypy.overrides]]
+module = "ingestion.ocr_pipeline"
+disallow_untyped_calls = false
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
