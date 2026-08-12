@@ -55,3 +55,8 @@ backend/eval/latest_extraction_run.json
 .DS_Store
 .vscode/
 .idea/
+
+# Lock files
+.~lock.*
+*.lock
+
