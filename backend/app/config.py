@@ -13,6 +13,11 @@ class Settings(BaseSettings):
     API_PORT: int = 8000
     API_HOST: str = "0.0.0.0"
     GEMINI_API_KEY: str = ""
+    # Gemini Flash/Flash-Lite free-tier RPM changes over time - check
+    # https://aistudio.google.com and override in .env rather than editing
+    # this default. Deliberately not hardcoded inside the client itself.
+    GEMINI_RPM: int = 10
+    GEMINI_MODEL_NAME: str = "gemini-1.5-flash"
     IBBI_CONTACT_EMAIL: str = "info@cirpindex.org"
 
     model_config = SettingsConfigDict(
