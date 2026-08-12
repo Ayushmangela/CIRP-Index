@@ -119,7 +119,7 @@ adjudicating_authority_bench, admission_date, order_type
 ## Tech stack
 Backend: Python 3.11, FastAPI, SQLAlchemy 2.x, Pydantic v2, httpx, pypdf +
 pdfplumber, tenacity
-Frontend: React + Vite + TypeScript, TanStack Query, Tailwind
+Frontend: Next.js (App Router) + TypeScript, TanStack Query, Tailwind
 DB: PostgreSQL + pg_trgm
 Jobs: GitHub Actions cron
 Deploy: Vercel (frontend), Render/Fly free web service (API), Neon (DB)

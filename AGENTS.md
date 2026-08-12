@@ -37,7 +37,7 @@ npm run build
 
 ```bash
 cd backend && uvicorn app.main:app --reload      # API on :8000
-cd frontend && npm run dev                        # UI on :5173
+cd frontend && npm run dev                        # UI on :3000
 
 python -m ingestion.ibbi_listing --start-page 0 --end-page 5
 python -m ingestion.pdf_pipeline --limit 50
@@ -56,10 +56,11 @@ backend/
   extraction/     LLM client, prompt, Pydantic contract, span verifier
   linking/        Order -> case entity resolution
   eval/           Gold set harness and accuracy reporting
-frontend/src/
-  routes/         Three screens only: search, case detail, bench analytics
-  components/     Shared UI
-  lib/api.ts      Generated types from the OpenAPI schema
+frontend/
+  app/            Next.js App Router — three screens only: search, case
+                  detail, bench analytics
+  src/components/ Shared UI
+  src/lib/api.ts  Generated types from the OpenAPI schema
 ```
 
 ## Non-negotiable rules

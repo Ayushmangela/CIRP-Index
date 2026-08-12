@@ -39,7 +39,8 @@ htmlcov/
 node_modules/
 frontend/dist/
 frontend/node_modules/
-frontend/.vite/
+frontend/.next/
+frontend/next-env.d.ts
 .npm
 *.log
 

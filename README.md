@@ -38,7 +38,7 @@ npm run build
 # API server (port 8000)
 cd backend && uvicorn app.main:app --reload
 
-# UI server (port 5173)
+# UI server (port 3000)
 cd frontend && npm run dev
 ```
 

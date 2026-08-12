@@ -33,6 +33,7 @@ def upgrade() -> None:
         "withdrawn",
         "unclassified",
         name="outcome_enum",
+        create_type=False,
     )
     outcome_enum.create(op.get_bind(), checkfirst=True)
 
@@ -44,6 +45,7 @@ def upgrade() -> None:
         "extracted",
         "failed",
         name="processing_status_enum",
+        create_type=False,
     )
     processing_status_enum.create(op.get_bind(), checkfirst=True)
 
@@ -52,6 +54,7 @@ def upgrade() -> None:
         "approved",
         "rejected",
         name="link_review_status_enum",
+        create_type=False,
     )
     link_review_status_enum.create(op.get_bind(), checkfirst=True)
 
